@@ -1,95 +1,32 @@
 import React from 'react';
-import { Box, Card, CardContent, Grid, Typography, Paper, Chip, useTheme } from '@mui/material';
+import { Box, Card, CardContent, Grid, Typography, Paper, Chip, Button, Stack, useTheme } from '@mui/material';
+import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
+import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import TrendingUpRoundedIcon from '@mui/icons-material/TrendingUpRounded';
+import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
+import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
+import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
+import Inventory2RoundedIcon from '@mui/icons-material/Inventory2Rounded';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { dashboardMetrics, ordersChartData } from '../data/mockData';
 import { AiForecastCard } from '../components/AiForecastCard';
 import { AiChatBox } from '../components/AiChatBox';
 
+const icons = [<AttachMoneyRoundedIcon />, <ShoppingCartRoundedIcon />, <PeopleAltRoundedIcon />, <Inventory2RoundedIcon />];
+
 export default function Dashboard() {
   const theme = useTheme();
-
-  return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-      <Box>
-        <Typography variant="h4" gutterBottom>
-          Chào mừng quay lại, quản trị viên
-        </Typography>
-        <Typography color="text.secondary">
-          Truy cập số liệu sức khỏe hệ thống và doanh số mới nhất trên một bảng điều khiển hiện đại.
-        </Typography>
-      </Box>
-
-      <Grid container spacing={3}>
-        {dashboardMetrics.map((metric, index) => (
-          <Grid item xs={12} sm={6} md={3} key={metric.label}>
-            <Paper elevation={3} sx={{ p: 3, minHeight: 150, borderRadius: 3 }}>
-              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                {metric.label}
-              </Typography>
-              <Typography variant="h4" sx={{ mb: 1 }}>
-                {metric.value}
-              </Typography>
-              <Chip
-                label={metric.caption}
-                size="small"
-                color={index === 3 ? 'secondary' : 'primary'}
-                variant="outlined"
-              />
-            </Paper>
-          </Grid>
-        ))}
-      </Grid>
-
-      <Grid container spacing={3}>
-        <Grid item xs={12} lg={8}>
-          <Card elevation={3} sx={{ borderRadius: 3, overflow: 'hidden' }}>
-            <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" gutterBottom>
-                Đơn hàng hàng tuần
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                Theo dõi số đơn hàng trong tuần để điều chỉnh tồn kho và giao hàng kịp thời.
-              </Typography>
-              <Box sx={{ height: 320 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={ordersChartData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke={theme.palette.divider} />
-                    <XAxis dataKey="name" stroke={theme.palette.text.secondary} />
-                    <YAxis stroke={theme.palette.text.secondary} />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="sales" stroke={theme.palette.primary.main} strokeWidth={3} activeDot={{ r: 6 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} lg={4}>
-          <Paper elevation={3} sx={{ p: 3, borderRadius: 3, minHeight: 320 }}>
-            <Typography variant="h6" gutterBottom>
-              Thông tin nhanh
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-              Bảng điều khiển thiết kế cho quy trình hiện đại, với bảng phản hồi, bộ lọc tìm kiếm và trải nghiệm quản trị mượt mà.
-            </Typography>
-            <Box sx={{ display: 'grid', gap: 1 }}>
-              <Typography variant="body2">• React + TypeScript</Typography>
-              <Typography variant="body2">• Giao diện Material UI đáp ứng</Typography>
-              <Typography variant="body2">• Biểu đồ và bảng dữ liệu theo thời gian thực</Typography>
-              <Typography variant="body2">• Tối ưu cho desktop và mobile</Typography>
-            </Box>
-          </Paper>
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={3}>
-        <Grid item xs={12} lg={8}>
-          <AiForecastCard />
-        </Grid>
-        <Grid item xs={12} lg={4}>
-          <AiChatBox />
-        </Grid>
-      </Grid>
+  return <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: { xs: 'flex-start', sm: 'center' }, gap: 2, flexWrap: 'wrap' }}>
+      <Box><Typography variant="overline" color="primary.main" fontWeight={800} letterSpacing={1.2}>Thứ hai, 18 tháng 8, 2026</Typography><Typography variant="h4" sx={{ mt: .5 }}>Chào mừng quay lại, quản trị viên</Typography><Typography color="text.secondary" sx={{ mt: 1 }}>Đây là tổng quan hiệu suất hệ thống của bạn hôm nay.</Typography></Box>
+      <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />}>Xem báo cáo</Button>
     </Box>
-  );
+    <Grid container spacing={2.5}>{dashboardMetrics.map((metric, index) => { const down = index === 3; return <Grid item xs={12} sm={6} lg={3} key={metric.label}><Paper sx={{ p: 2.5, height: '100%' }}><Stack direction="row" justifyContent="space-between" alignItems="flex-start"><Box sx={{ p: 1.25, borderRadius: 2, bgcolor: index === 1 ? 'secondary.light' : 'primary.light', color: index === 1 ? 'secondary.main' : 'primary.main', display: 'flex' }}>{icons[index]}</Box><Chip size="small" color={down ? 'default' : 'success'} icon={down ? <ArrowDownwardRoundedIcon /> : <ArrowUpwardRoundedIcon />} label={metric.caption} /></Stack><Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>{metric.label}</Typography><Typography variant="h5" sx={{ mt: .5 }}>{metric.value}</Typography></Paper></Grid>; })}</Grid>
+    <Grid container spacing={2.5}>
+      <Grid item xs={12} lg={8}><Card><CardContent sx={{ p: { xs: 2, md: 3 } }}><Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 3 }}><Box><Typography variant="h6">Đơn hàng hàng tuần</Typography><Typography variant="body2" color="text.secondary" sx={{ mt: .5 }}>Hiệu suất đơn hàng trong 7 ngày gần nhất</Typography></Box><Chip label="7 ngày" variant="outlined" /></Stack><Box sx={{ height: 310 }}><ResponsiveContainer width="100%" height="100%"><LineChart data={ordersChartData} margin={{ top: 10, right: 12, left: -20, bottom: 0 }}><CartesianGrid strokeDasharray="3 3" stroke={theme.palette.divider} vertical={false} /><XAxis dataKey="name" stroke={theme.palette.text.secondary} axisLine={false} tickLine={false} /><YAxis stroke={theme.palette.text.secondary} axisLine={false} tickLine={false} /><Tooltip contentStyle={{ borderRadius: 12, border: `1px solid ${theme.palette.divider}`, background: theme.palette.background.paper }} /><Line type="monotone" dataKey="sales" stroke={theme.palette.primary.main} strokeWidth={4} dot={{ r: 4, fill: theme.palette.background.paper, strokeWidth: 3 }} activeDot={{ r: 7 }} /></LineChart></ResponsiveContainer></Box></CardContent></Card></Grid>
+      <Grid item xs={12} lg={4}><Paper sx={{ p: 3, height: '100%', background: `linear-gradient(145deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`, color: '#fff', border: 0 }}><Stack direction="row" justifyContent="space-between"><Box sx={{ p: 1, borderRadius: 2, bgcolor: 'rgba(255,255,255,.16)', display: 'flex' }}><TrendingUpRoundedIcon /></Box><Chip label="+18.6%" sx={{ color: '#fff', bgcolor: 'rgba(255,255,255,.14)' }} /></Stack><Typography variant="h5" sx={{ mt: 5, color: '#fff' }}>Tăng trưởng ổn định</Typography><Typography sx={{ mt: 1, color: 'rgba(255,255,255,.75)' }}>Doanh thu và lượng đơn hàng đang tăng tốt so với tuần trước.</Typography><Button sx={{ mt: 4, color: '#fff', borderColor: 'rgba(255,255,255,.4)' }} variant="outlined">Xem phân tích</Button></Paper></Grid>
+    </Grid>
+    <Grid container spacing={2.5}><Grid item xs={12} lg={8}><AiForecastCard /></Grid><Grid item xs={12} lg={4}><AiChatBox /></Grid></Grid>
+  </Box>;
 }

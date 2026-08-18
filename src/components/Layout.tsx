@@ -29,7 +29,7 @@ export default function Layout({ mode, onToggleTheme }: LayoutProps) {
   const current = navItems.find((item) => item.path === location.pathname || (item.path !== '/' && location.pathname.startsWith(item.path)));
 
   const drawer = (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', px: 1.5 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', px: 1.5, bgcolor: 'background.paper' }}>
       <Toolbar sx={{ px: 1.5, py: 3, minHeight: 'unset !important' }}>
         <Stack direction="row" alignItems="center" spacing={1.5}>
           <Avatar sx={{ bgcolor: 'primary.main', width: 42, height: 42, fontSize: 15, fontWeight: 800 }}>AD</Avatar>
@@ -54,7 +54,7 @@ export default function Layout({ mode, onToggleTheme }: LayoutProps) {
 
   return <Box sx={{ display: 'flex', minHeight: '100vh' }}>
     <AppBar position="fixed" color="inherit" elevation={0} sx={{ zIndex: theme.zIndex.drawer + 1, borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper' }}>
-      <Toolbar sx={{ gap: 2 }}>
+      <Toolbar sx={{ gap: 2, minHeight: { xs: 68, md: 76 } }}>
         {!isDesktop && <IconButton onClick={() => setMobileOpen(!mobileOpen)} aria-label="Mở menu"><MenuIcon /></IconButton>}
         <Typography variant="body2" color="text.secondary" sx={{ display: { xs: 'none', sm: 'block' } }}>Workspace /</Typography><Typography fontWeight={800}>{current?.label ?? 'Tổng quan'}</Typography>
         <Box sx={{ flexGrow: 1 }} />

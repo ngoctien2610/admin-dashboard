@@ -31,7 +31,7 @@ export const DataTable: React.FC<DataTableProps> = ({
   }
 
   return (
-    <Paper elevation={2} sx={{ width: '100%', borderRadius: 3, overflow: 'hidden' }}>
+    <Paper elevation={0} sx={{ width: '100%', borderRadius: 3, overflow: 'hidden' }}>
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 420, p: 4 }}>
           <CircularProgress />
@@ -45,7 +45,7 @@ export const DataTable: React.FC<DataTableProps> = ({
             paginationModel={paginationModel}
             onPaginationModelChange={setPaginationModel}
             disableSelectionOnClick
-            sx={{ border: 0 }}
+            sx={{ border: 0, '& .MuiDataGrid-columnHeaders': { bgcolor: 'action.hover', borderBottom: 0 }, '& .MuiDataGrid-columnHeaderTitle': { fontWeight: 800 }, '& .MuiDataGrid-row': { transition: 'background-color .15s ease' }, '& .MuiDataGrid-row:hover': { bgcolor: 'action.hover' }, '& .MuiDataGrid-cell': { borderColor: 'divider' }, '& .MuiDataGrid-footerContainer': { borderTop: 0 } }}
           />
         </Box>
       )}

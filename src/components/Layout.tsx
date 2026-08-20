@@ -136,7 +136,7 @@ export default function Layout({ mode, onToggleTheme }: LayoutProps) {
         <Stack direction="row" alignItems="center" spacing={1.5}>
           <Avatar
             sx={{
-              bgcolor: "primary.main",
+              bgcolor: "secondary.main",
               width: 42,
               height: 42,
               fontSize: 15,
@@ -146,7 +146,9 @@ export default function Layout({ mode, onToggleTheme }: LayoutProps) {
             AD
           </Avatar>
           <Box>
-            <Typography fontWeight={800}>Nexus Admin</Typography>
+            <Typography fontWeight={800} sx={{ letterSpacing: "-.02em" }}>
+              Nexus Admin
+            </Typography>
             <Typography variant="caption" color="text.secondary">
               Workspace quản trị
             </Typography>
@@ -179,6 +181,7 @@ export default function Layout({ mode, onToggleTheme }: LayoutProps) {
                 "&.Mui-selected": {
                   color: "primary.main",
                   bgcolor: "primary.light",
+                  boxShadow: "inset 3px 0 0 currentColor",
                   "& .MuiListItemIcon-root": { color: "primary.main" },
                 },
                 "&:hover": { bgcolor: "action.hover" },
@@ -342,6 +345,8 @@ export default function Layout({ mode, onToggleTheme }: LayoutProps) {
           minWidth: 0,
           p: { xs: 2, sm: 3, lg: 4 },
           width: { md: `calc(100% - ${drawerWidth}px)` },
+          background:
+            "linear-gradient(180deg, rgba(255,255,255,.34), transparent 280px)",
         }}
       >
         <Toolbar />

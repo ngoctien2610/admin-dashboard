@@ -29,22 +29,34 @@ export default function App() {
       createTheme({
         palette: {
           mode,
-          primary: { main: "#4f46e5", light: "#eef2ff", dark: "#3730a3" },
-          secondary: { main: "#0f9f8f", light: "#dff8f3", dark: "#087f73" },
+          primary: { main: "#087f73", light: "#e0f3ef", dark: "#07534e" },
+          secondary: { main: "#e56f55", light: "#fff0eb", dark: "#a94735" },
           background: {
-            default: mode === "light" ? "#f7f8fc" : "#0b1120",
-            paper: mode === "light" ? "#ffffff" : "#111827",
+            default: mode === "light" ? "#f4f7f5" : "#0d1716",
+            paper: mode === "light" ? "#ffffff" : "#142220",
           },
           text: {
-            primary: mode === "light" ? "#172033" : "#f4f7ff",
-            secondary: mode === "light" ? "#667085" : "#aab4c7",
+            primary: mode === "light" ? "#172b29" : "#eff8f5",
+            secondary: mode === "light" ? "#63736f" : "#a8bbb6",
           },
         },
-        shape: { borderRadius: 16 },
+        shape: { borderRadius: 14 },
         typography: {
-          fontFamily: 'Arial, "Helvetica Neue", Roboto, sans-serif',
-          h4: { fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.12 },
-          h5: { fontWeight: 800, letterSpacing: "-0.02em" },
+          fontFamily: '"DM Sans", "Segoe UI", sans-serif',
+          h1: { fontFamily: '"Manrope", sans-serif', fontWeight: 800 },
+          h2: { fontFamily: '"Manrope", sans-serif', fontWeight: 800 },
+          h3: { fontFamily: '"Manrope", sans-serif', fontWeight: 800 },
+          h4: {
+            fontFamily: '"Manrope", sans-serif',
+            fontWeight: 800,
+            letterSpacing: "-0.03em",
+            lineHeight: 1.12,
+          },
+          h5: {
+            fontFamily: '"Manrope", sans-serif',
+            fontWeight: 800,
+            letterSpacing: "-0.02em",
+          },
           h6: { fontWeight: 750 },
           button: { textTransform: "none", fontWeight: 700 },
         },
@@ -54,6 +66,11 @@ export default function App() {
               body: {
                 minHeight: "100vh",
                 transition: "background-color .25s ease, color .25s ease",
+                backgroundImage:
+                  mode === "light"
+                    ? "linear-gradient(rgba(8, 127, 115, .025) 1px, transparent 1px), linear-gradient(90deg, rgba(8, 127, 115, .025) 1px, transparent 1px)"
+                    : "none",
+                backgroundSize: "32px 32px",
               },
             },
           },
@@ -64,7 +81,7 @@ export default function App() {
                 border: `1px solid ${mode === "light" ? "#e8ebf2" : "#263249"}`,
                 boxShadow:
                   mode === "light"
-                    ? "0 10px 32px rgba(24, 35, 70, .045)"
+                    ? "0 12px 32px rgba(23, 43, 41, .055)"
                     : "0 10px 30px rgba(0, 0, 0, .2)",
               },
             },
@@ -80,7 +97,7 @@ export default function App() {
                 borderRadius: 11,
                 boxShadow: "none",
                 minHeight: 42,
-                "&:hover": { boxShadow: "0 8px 18px rgba(79, 70, 229, .16)" },
+                "&:hover": { boxShadow: "0 8px 18px rgba(8, 127, 115, .16)" },
               },
             },
           },

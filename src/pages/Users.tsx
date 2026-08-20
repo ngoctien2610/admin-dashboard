@@ -17,7 +17,7 @@ import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useFetch } from '../hooks/useApi';
-import { FormDialog } from '../components/FormDialog';
+import { FormDialog, FormField } from '../components/FormDialog';
 
 const mapRoleLabel = (role: string) =>
   role === 'Admin' || role === 'Quản trị viên' ? 'Quản trị viên' :
@@ -82,7 +82,7 @@ const columns: GridColDef[] = [
   { field: 'lastLogin', headerName: 'Đăng nhập cuối', width: 140 },
 ];
 
-const formFields = [
+const formFields: FormField[] = [
   { name: 'name', label: 'Họ tên', required: true },
   { name: 'email', label: 'Email', type: 'email' as const, required: true },
   { name: 'role', label: 'Vai trò', type: 'select' as const, options: [
@@ -101,7 +101,7 @@ const formFields = [
 ];
 
 export default function Users() {
-  const { data: users, loading, error, refetch } = useFetch('/users');
+  const { data: users, loading, error, refetch } = useFetch<any[]>('/users');
   const usersData = users ?? [];
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
   const [searchText, setSearchText] = useState('');

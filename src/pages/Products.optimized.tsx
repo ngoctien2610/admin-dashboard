@@ -19,13 +19,13 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import { DataGrid, GridColDef, GridActionsCellItem } from '@mui/x-data-grid';
 import { useFetch } from '../hooks/useApi';
-import { FormDialog } from '../components/FormDialog';
+import { FormDialog, FormField } from '../components/FormDialog';
 
 const columns = (onView: (id: number) => void, onEdit: (product: any) => void): GridColDef[] => [
   { field: 'id', headerName: 'ID', width: 70 },
   { field: 'name', headerName: 'Product', width: 200 },
   { field: 'category', headerName: 'Category', width: 120 },
-  { field: 'price', headerName: 'Price', width: 100, valueGetter: (val) => `$${val?.toFixed(2)}` },
+  { field: 'price', headerName: 'Price', width: 100, valueGetter: (params) => typeof params.value === 'number' ? `$${params.value.toFixed(2)}` : '' },
   { field: 'stock', headerName: 'Stock', width: 100 },
   {
     field: 'status',
@@ -54,7 +54,7 @@ const columns = (onView: (id: number) => void, onEdit: (product: any) => void): 
   },
 ];
 
-const formFields = [
+const formFields: FormField[] = [
   { name: 'name', label: 'Product Name', required: true },
   { name: 'category', label: 'Category', type: 'select' as const, options: [
     { label: 'beauty', value: 'beauty' },
@@ -73,7 +73,8 @@ const formFields = [
 
 export default function Products() {
   const navigate = useNavigate();
-  const { data: products = [], loading, error, refetch } = useFetch('/products');
+  const { data: productsData, loading, error, refetch } = useFetch<any[]>('/products');
+  const products = productsData ?? [];
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [searchText, setSearchText] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');

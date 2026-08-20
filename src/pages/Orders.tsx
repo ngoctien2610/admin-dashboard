@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -17,11 +18,12 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { DataGrid, GridColDef, GridActionsCellItem } from '@mui/x-data-grid';
 import { useFetch } from '../hooks/useApi';
-import { FormDialog } from '../components/FormDialog';
+import { FormDialog, FormField } from '../components/FormDialog';
 
-const columns = (onEdit: (order: any) => void): GridColDef[] => [
+const columns = (onView: (id: number) => void, onEdit: (order: any) => void): GridColDef[] => [
   { field: 'id', headerName: 'ID', width: 70 },
   { field: 'orderId', headerName: 'Mã đơn', width: 120 },
   { field: 'customer', headerName: 'Khách hàng', width: 150 },
@@ -73,9 +75,16 @@ const columns = (onEdit: (order: any) => void): GridColDef[] => [
         <GridActionsCellItem icon={<EditIcon />} label="Sửa" onClick={() => onEdit(params.row)} />
     ),
   },
+  {
+    field: 'view',
+    headerName: 'Chi tiết',
+    width: 80,
+    sortable: false,
+    renderCell: (params) => <GridActionsCellItem icon={<VisibilityIcon />} label="Xem" onClick={() => onView(params.row.id)} />,
+  },
 ];
 
-const formFields = [
+const formFields: FormField[] = [
   { name: 'status', label: 'Trạng thái', type: 'select' as const, options: [
     { label: 'Đang xử lý', value: 'Processing' },
     { label: 'Đã giao', value: 'Delivered' },
@@ -102,7 +111,8 @@ const normalizeOrderStatusValue = (status: string) =>
   status;
 
 export default function Orders() {
-  const { data: orders, loading, error, refetch } = useFetch('/orders');
+  const navigate = useNavigate();
+  const { data: orders, loading, error, refetch } = useFetch<any[]>('/orders');
   const ordersData = orders ?? [];
   const [filteredOrders, setFilteredOrders] = useState<any[]>([]);
   const [searchText, setSearchText] = useState('');
@@ -242,7 +252,7 @@ export default function Orders() {
             ) : (
               <DataGrid
                 rows={filteredOrders}
-                columns={columns((order) => { setEditingOrder(order); setDialogOpen(true); })}
+                columns={columns((id) => navigate(`/orders/${id}`), (order) => { setEditingOrder(order); setDialogOpen(true); })}
                 pageSizeOptions={[5, 10]}
                 initialState={{ pagination: { paginationModel: { page: 0, pageSize: 5 } } }}
                 sx={{ border: 0 }}

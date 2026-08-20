@@ -7,6 +7,16 @@ import Users from './pages/Users';
 import Products from './pages/Products';
 import Orders from './pages/Orders';
 import ProductDetail from './pages/ProductDetail';
+import Analytics from './pages/Analytics';
+import AuditLog from './pages/AuditLog';
+import Rbac from './pages/Rbac';
+import PermissionGate from './components/PermissionGate';
+import UserDetail from './pages/UserDetail';
+import OrderDetail from './pages/OrderDetail';
+import Inventory from './pages/Inventory';
+import Operations from './pages/Operations';
+import Login from './pages/Login';
+import { AuthProvider, RequireAuth } from './auth/AuthContext';
 
 export default function App() {
   const [mode, setMode] = React.useState<'light' | 'dark'>(() => {
@@ -43,18 +53,28 @@ export default function App() {
   React.useEffect(() => { window.localStorage.setItem('appTheme', mode); }, [mode]);
 
   return (
-    <ThemeProvider theme={theme}>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
       <CssBaseline />
       <Routes>
-        <Route path="/" element={<Layout mode={mode} onToggleTheme={() => setMode((prev) => prev === 'light' ? 'dark' : 'light')} />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<RequireAuth><Layout mode={mode} onToggleTheme={() => setMode((prev) => prev === 'light' ? 'dark' : 'light')} /></RequireAuth>}>
           <Route index element={<Dashboard />} />
           <Route path="users" element={<Users />} />
+          <Route path="users/:userId" element={<UserDetail />} />
           <Route path="products" element={<Products />} />
           <Route path="products/:productId" element={<ProductDetail />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="orders/:orderId" element={<OrderDetail />} />
+          <Route path="inventory" element={<Inventory />} />
+          <Route path="operations" element={<Operations />} />
+            <Route path="analytics" element={<PermissionGate permission="analytics.view"><Analytics /></PermissionGate>} />
+            <Route path="audit-log" element={<PermissionGate permission="audit.view"><AuditLog /></PermissionGate>} />
+            <Route path="rbac" element={<PermissionGate permission="rbac.manage"><Rbac /></PermissionGate>} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Route>
       </Routes>
-    </ThemeProvider>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }

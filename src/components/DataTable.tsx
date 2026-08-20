@@ -44,7 +44,7 @@ export const DataTable: React.FC<DataTableProps> = ({
             pageSizeOptions={[5, 10, 25]}
             paginationModel={paginationModel}
             onPaginationModelChange={setPaginationModel}
-            disableSelectionOnClick
+            disableRowSelectionOnClick
             sx={{ border: 0, '& .MuiDataGrid-columnHeaders': { bgcolor: 'action.hover', borderBottom: 0 }, '& .MuiDataGrid-columnHeaderTitle': { fontWeight: 800 }, '& .MuiDataGrid-row': { transition: 'background-color .15s ease' }, '& .MuiDataGrid-row:hover': { bgcolor: 'action.hover' }, '& .MuiDataGrid-cell': { borderColor: 'divider' }, '& .MuiDataGrid-footerContainer': { borderTop: 0 } }}
           />
         </Box>

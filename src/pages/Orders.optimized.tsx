@@ -17,14 +17,14 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import EditIcon from '@mui/icons-material/Edit';
 import { DataGrid, GridColDef, GridActionsCellItem } from '@mui/x-data-grid';
 import { useFetch } from '../hooks/useApi';
-import { FormDialog } from '../components/FormDialog';
+import { FormDialog, FormField } from '../components/FormDialog';
 
 const columns = (onEdit: (order: any) => void): GridColDef[] => [
   { field: 'id', headerName: 'ID', width: 70 },
   { field: 'orderId', headerName: 'Order ID', width: 120 },
   { field: 'customer', headerName: 'Customer', width: 150 },
   { field: 'product', headerName: 'Product', width: 180 },
-  { field: 'total', headerName: 'Total', width: 100, valueGetter: (val) => `$${val?.toFixed(2)}` },
+  { field: 'total', headerName: 'Total', width: 100, valueGetter: (params) => typeof params.value === 'number' ? `$${params.value.toFixed(2)}` : '' },
   {
     field: 'status',
     headerName: 'Status',
@@ -54,7 +54,7 @@ const columns = (onEdit: (order: any) => void): GridColDef[] => [
   },
 ];
 
-const formFields = [
+const formFields: FormField[] = [
   { name: 'status', label: 'Status', type: 'select' as const, options: [
     { label: 'Processing', value: 'Processing' },
     { label: 'Shipped', value: 'Shipped' },
@@ -64,7 +64,8 @@ const formFields = [
 ];
 
 export default function Orders() {
-  const { data: orders = [], loading, error, refetch } = useFetch('/orders');
+  const { data: ordersData, loading, error, refetch } = useFetch<any[]>('/orders');
+  const orders = ordersData ?? [];
   const [filteredOrders, setFilteredOrders] = useState<any[]>([]);
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState('');

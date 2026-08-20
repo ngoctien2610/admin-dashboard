@@ -13,7 +13,7 @@ import {
   Paper,
 } from '@mui/material';
 
-interface FormField {
+export interface FormField {
   name: string;
   label: string;
   type?: 'text' | 'email' | 'number' | 'select';

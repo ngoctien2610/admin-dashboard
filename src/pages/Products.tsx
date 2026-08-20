@@ -20,7 +20,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import { DataGrid, GridColDef, GridActionsCellItem } from '@mui/x-data-grid';
 import { useFetch } from '../hooks/useApi';
-import { FormDialog } from '../components/FormDialog';
+import { FormDialog, FormField } from '../components/FormDialog';
 import { AiSearchBox } from '../components/AiSearchBox';
 import { AiProductDescription } from '../components/AiProductDescription';
 
@@ -113,7 +113,7 @@ const columns = (onView: (id: number) => void, onEdit: (product: any) => void): 
   },
 ];
 
-const formFields = [
+const formFields: FormField[] = [
   { name: 'name', label: 'Tên sản phẩm', required: true },
   { name: 'category', label: 'Danh mục', type: 'select' as const, options: [
     { label: 'Làm đẹp', value: 'beauty' },
@@ -122,17 +122,11 @@ const formFields = [
     { label: 'Thực phẩm', value: 'groceries' },
   ], required: true },
   { name: 'price', label: 'Giá', type: 'number', required: true },
-  { name: 'stock', label: 'Tồn kho', type: 'number', required: true },
-  { name: 'status', label: 'Trạng thái', type: 'select' as const, options: [
-    { label: 'Còn hàng', value: 'In stock' },
-    { label: 'Sắp hết', value: 'Low stock' },
-    { label: 'Hết hàng', value: 'Out of stock' },
-  ], required: true },
 ];
 
 export default function Products() {
   const navigate = useNavigate();
-  const { data: products, loading, error, refetch } = useFetch('/products');
+  const { data: products, loading, error, refetch } = useFetch<any[]>('/products');
   const productsData = products ?? [];
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [searchText, setSearchText] = useState('');
@@ -163,7 +157,6 @@ export default function Products() {
       const payload = {
         ...data,
         price: parseFloat(data.price),
-        stock: parseInt(data.stock),
       };
       const response = await fetch(`http://localhost:3002/api/products${editingProduct ? `/${editingProduct.id}` : ''}`, {
         method: editingProduct ? 'PUT' : 'POST',
@@ -291,8 +284,6 @@ export default function Products() {
           initialValues={editingProduct ? {
             ...editingProduct,
             price: String(editingProduct.price),
-            stock: String(editingProduct.stock),
-            status: normalizeStockStatusValue(editingProduct.status),
           } : {}}
           onSubmit={handleSaveProduct}
           onClose={() => { setDialogOpen(false); setEditingProduct(null); }}

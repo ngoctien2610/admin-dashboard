@@ -136,7 +136,7 @@ export async function fetchOrders(): Promise<Order[]> {
   return cartData.carts.map((cart) => {
     const productSummary = cart.products
       .slice(0, 2)
-      .map((entry) => productMap.get(entry.productId) ?? 'Sản phẩm không rõ')
+      .map((entry: any) => productMap.get(entry.productId) ?? 'Sản phẩm không rõ')
       .join(', ');
 
     return {

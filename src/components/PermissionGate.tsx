@@ -24,7 +24,7 @@ export default function PermissionGate({
 }: PermissionGateProps) {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { can, data, loading, role } = useRbac(user?.role);
+  const { can, loading, role } = useRbac(user?.role);
   if (loading)
     return (
       <Box sx={{ display: "grid", placeItems: "center", minHeight: 220 }}>

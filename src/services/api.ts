@@ -103,7 +103,6 @@ export async function fetchProductById(id: number): Promise<Product> {
 export async function createProduct(
   product: Omit<Product, "id">,
 ): Promise<Product> {
-  const [title, ...rest] = product.name.split(" ");
   const payload = {
     title: product.name,
     description: `Sản phẩm ${product.name}`,

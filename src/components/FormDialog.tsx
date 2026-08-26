@@ -10,7 +10,6 @@ import {
   Box,
   MenuItem,
   Stack,
-  Paper,
 } from "@mui/material";
 
 export interface FormField {

@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
   Box,
   Button,
-  Card,
   CardContent,
   CircularProgress,
   Grid,

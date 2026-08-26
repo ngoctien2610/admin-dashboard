@@ -4,7 +4,6 @@ import {
   Paper,
   Typography,
   CircularProgress,
-  Chip,
   Grid,
 } from '@mui/material';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';

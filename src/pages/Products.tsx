@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -31,15 +31,6 @@ const mapStockStatusLabel = (status: string) =>
       ? "Sắp hết"
       : status === "Out of stock" || status === "Hết hàng"
         ? "Hết hàng"
-        : status;
-
-const normalizeStockStatusValue = (status: string) =>
-  status === "Còn hàng"
-    ? "In stock"
-    : status === "Sắp hết"
-      ? "Low stock"
-      : status === "Hết hàng"
-        ? "Out of stock"
         : status;
 
 const mapCategoryLabel = (category: string) =>
